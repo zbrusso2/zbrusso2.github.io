@@ -56,6 +56,11 @@
   fill: none;
 }
 
+#myTitle {
+  text-align: center;
+  font: 40px sans-serif; 
+}
+
 
 circle {
     fill: steelblue;
@@ -72,6 +77,8 @@ circle {
   <script src="https://d3js.org/d3.v3.min.js"></script>
 </head>
 <body>
+  <title>GDP vs Unemployment Rate</title>
+  <div id="myTitle">GDP vs Unemployment Rate</div>
   <div id="vis-container"> 
     <svg width="960" height="600" id="scatter1"></svg> 
   </div>
@@ -111,9 +118,15 @@ circle {
   .orient('bottom');
 
     main.append('g')
-  .attr('transform', 'translate(0,' + height + ')')
-  .attr('class', 'main axis date')
-  .call(xAxis);
+  .attr("class", "x axis")
+                  .attr("transform", "translate(0," + height + ")") // move axis to the bottom of the canvas
+                  .call(xAxis)
+                .append("text")
+                  .attr("class", "label")
+                  .attr("x", width) // x-offset from the xAxis, move label all the way to the right
+                  .attr("y", -6)    // y-offset from the xAxis, moves text UPWARD!
+                  .style("text-anchor", "end") // right-justify text
+                  .text("GDP Percent Change");
 
     // draw the y axis
     var yAxis = d3.svg.axis()
@@ -122,8 +135,14 @@ circle {
 
     main.append('g')
   .attr('transform', 'translate(0,0)')
-  .attr('class', 'main axis date')
-  .call(yAxis);
+  .attr("class", "y axis") // .orient('left') took care of axis positioning for us
+                  .call(yAxis)
+                .append("text")
+                  .attr("class", "label")
+                  .attr("transform", "rotate(-90)") // although axis is rotated, text is not
+                  .attr("y", 15) // y-offset from yAxis, moves text to the RIGHT because it's rotated, and positive y is DOWN
+                  .style("text-anchor", "end")
+                  .text("Unemployment Rate");
 
     var g = main.append("svg:g"); 
 
