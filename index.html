@@ -158,9 +158,7 @@ $(document).ready(function(){
 
 function tooltipHtml(n, d){ /* function to create html content string in tooltip div. */
     return "<h4>"+n+"</h4><table>"+
-      "<tr><td>Low</td><td>"+(d.low)+"</td></tr>"+
-      "<tr><td>Average</td><td>"+(d.avg)+"</td></tr>"+
-      "<tr><td>High</td><td>"+(d.high)+"</td></tr>"+
+      "<tr><td>GDP Change:</td><td>"+(d.value)+"%</td></tr>"+
       "</table>";
   }
   
@@ -169,6 +167,7 @@ function tooltipHtml(n, d){ /* function to create html content string in tooltip
   
   d3.csv("data/states.csv", function(stateAbrevData) { 
   		var values = {}
+  		var array_values = []; 
     	for (var i = 0; i <data.length; i++) { 
     		value = data[i].value; 
     		state = data[i].state;
@@ -179,11 +178,9 @@ function tooltipHtml(n, d){ /* function to create html content string in tooltip
     				break;
     			}	
     		}
-      		values[state_abrev] = {'value':value}
-
+      		values[state_abrev] = {'value':parseFloat(value)}
+      		array_values.push(parseFloat(value)); 
     	}
-    
-  console.log(values);
   var sampleData ={}; 
   ["HI", "AK", "FL", "SC", "GA", "AL", "NC", "TN", "RI", "CT", "MA",
   "ME", "NH", "VT", "NY", "NJ", "PA", "DE", "MD", "WV", "KY", "OH", 
@@ -191,13 +188,10 @@ function tooltipHtml(n, d){ /* function to create html content string in tooltip
   "CO", "NM", "OR", "ND", "SD", "NE", "IA", "MS", "IN", "IL", "MN", 
   "WI", "MO", "AR", "OK", "KS", "LA", "VA"]
     .forEach(function(d){
-       var low=Math.round(100*Math.random()), 
-        mid=Math.round(100*Math.random()), 
-        high=Math.round(100*Math.random());
-      /*sampleData[d]={low:d3.min([low,mid,high]), high:d3.max([low,mid,high]), 
-          avg:Math.round((low+mid+high)/3), color:d3.interpolate("#ffffcc", "#800026")(low/100)}; */
-    	sampleData[d]={value:values[d].value, low:d3.min([low,mid,high]), high:d3.max([low,mid,high]), 
-          avg:Math.round((low+mid+high)/3), color:d3.interpolate("#ffffcc", "#800026")(low/100)};
+    	/*sampleData[d]={value:values[d].value, low:d3.min([low,mid,high]), high:d3.max([low,mid,high]), 
+          avg:Math.round((low+mid+high)/3), color:d3.interpolate("#ffffcc", "#800026")(low/100)};*/
+
+    	sampleData[d]={value:values[d].value, color:d3.interpolate("#d3e5ff", "#08306B")((values[d].value-(Math.min.apply(Math, array_values)))/(Math.max.apply(Math, array_values)-(Math.min.apply(Math, array_values))))}
     });
     
 
