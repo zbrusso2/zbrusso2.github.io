@@ -86,7 +86,7 @@ circle {
 	<!-- This following line is only necessary in the case of using the option `scrollOverflow:true` -->
 	<script type="text/javascript" src="libs/fullpage.js/vendors/scrolloverflow.min.js"></script>
 	<script type="text/javascript" src="libs/fullpage.js/dist/fullpage.extensions.min.js"></script>
-	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="https://d3js.org/d3.v3.min.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -235,134 +235,7 @@ function tooltipHtml(n, d){ /* function to create html content string in tooltip
   
   d3.select(self.frameElement).style("height", "600px");
 
-  drawScatter = function(id, data) {  
-  	
-   
-    var margin = {top: 20, right: 15, bottom: 60, left: 60}
-      , width = 960 - margin.left - margin.right
-      , height = 500 - margin.top - margin.bottom;
-    
-    var x = d3.scale.linear()
-              .domain([0, d3.max(data, function(d) { return d[0]; })])
-              .range([ 0, width ]);
-    
-    var y = d3.scale.linear()
-    	      .domain([0, d3.max(data, function(d) { return d[1]; })])
-    	      .range([ height, 0 ]);
  
-    var chart = d3.select(id)
-	.attr('width', width + margin.right + margin.left)
-	.attr('height', height + margin.top + margin.bottom)
-	.attr('class', 'chart')
-
-    var main = chart.append('g')
-	.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-	.attr('width', width)
-	.attr('height', height)
-	.attr('class', 'main')   
-        
-    // draw the x axis
-    var xAxis = d3.svg.axis()
-	.scale(x)
-	.orient('bottom');
-
-    main.append('g')
-	.attr('transform', 'translate(0,' + height + ')')
-	.attr('class', 'main axis date')
-	.call(xAxis);
-
-    // draw the y axis
-    var yAxis = d3.svg.axis()
-	.scale(y)
-	.orient('left');
-
-    main.append('g')
-	.attr('transform', 'translate(0,0)')
-	.attr('class', 'main axis date')
-	.call(yAxis);
-
-    var g = main.append("svg:g"); 
-
-     var tooltip = d3.select("#container2")
-	   .append("div")
-	   .attr("id", "tooltip2")
-	   .style("position", "absolute")
-	   .style("z-index", "10")
-	   .style("visibility", "hidden")
-	   .text("a simple tooltip");
-
-    function mouseOver(d){
-      d3.select("#tooltip2").transition().duration(200).style("opacity", .9);      
-      
-      console.log(d);
-      console.log(d3.event.pageX);
-      console.log(d3.event.pageY);
-
-      d3.select("#tooltip2").html("test")
-                      .style("top", (d3.mouse(this)[0] + 16) + "px")
-        				.style("left", (d3.mouse(this)[1] + 16) + "px")
-                    .transition()
-                      .duration(200) // ms
-                      .style("opacity", .9) // started as 0!
-    }
-    
-    function mouseOut(){
-      d3.select("#tooltip2").transition().duration(500).style("opacity", 0);      
-    }
-    
-    g.selectAll("scatter-dots")
-      .data(data)
-      .enter().append("svg:circle")
-      	  .attr("class", "circle")
-      	  .attr("circletitle", "test")
-          .attr("cx", function (d,i) { return x(d[0]); } )
-          .attr("cy", function (d) { return y(d[1]); } )
-          .attr("r", 8)
-          .on("mouseover", function(d) {
-          	console.log(d3.mouse(this)[0]);
-          	console.log(d3.mouse(this)[1]);
-     tooltip.text("Pos : " + d3.mouse(this)[0] + ' : ' + d3.mouse(this)[1]);
-
-     return tooltip.style("visibility", "visible");
-   })
-   .on("mousemove", function() {
-     return tooltip.style("top",
-       (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
-   })
-   .on("mouseout", function() {
-     return tooltip.style("visibility", "hidden");
-   });
-
-
-
-
-  };
-
-  d3.csv("data/GdpPopUnemp.csv", function(data) {
-  	var dataPopUnemp={}; 
-  	var dataTuple1 = [];  
-  	var dataTuple2 = [];
-  	var dataGdpUnemp={}; 
-  	console.log(data[0]);
-  	console.log(data[0]['GDP Percent Change']);
-  	console.log(data[0]['Population']);
-  	for (var i = 0; i < data.length; i++) {
-  		var pop = parseFloat(data[i].Population);
-  		var unemp = parseFloat(data[i].UnemploymentRate);
-  		var gdp = parseFloat(data[i].GDPPercentChange);
-  		dataPopUnemp[data[i].States] = {Population:pop, UnemploymentRate:unemp};
-  		dataTuple1.push([data[i].Population, data[i].UnemploymentRate]);
-  		dataGdpUnemp[data[i].States] = {GDP:gdp, UnemploymentRate:unemp};
-  		dataTuple2.push([gdp,unemp]);
-  	}
-  	console.log(dataPopUnemp);
-  	console.log(dataGdpUnemp); 
-  	console.log(dataTuple1);
-  	console.log(dataTuple2);
-  	drawScatter("#scatter1", dataTuple1, dataPopUnemp); 
-  	//drawScatter("#scatter2", dataTuple2, dataGdpUnemp); 
-
-  }); 
 </script>
 </body>
 </html>
