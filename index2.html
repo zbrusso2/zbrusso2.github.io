@@ -102,7 +102,13 @@ circle {
 		<svg width="960" height="600" id="scatter1"></svg> 
 	</div>
 	<a class="next" href="/index3.html">&#10095;</a>
-
+	<select id="mySelect" onchange="subSetStates()">
+	  <option id= "AllStates" value="AllStates" onclick="subSetStates()">All States</option>
+	  <option value="Midwest" onclick="subSetStates()">Midwest</option>
+	  <option value="Northeast" onclick="subSetStates()">Northeast</option>
+	  <option value="South" onclick="subSetStates()">South</option>
+	  <option value="West" onclick="subSetStates()">West</option>
+	</select>
 </body>
 
 <script> 
@@ -227,9 +233,15 @@ circle {
   		dataTuple2.push([gdp,unemp]);
   	}
   	drawScatter("#scatter1", dataTuple1, dataPopUnemp); 
-  	//drawScatter("#scatter2", dataTuple2, dataGdpUnemp); 
 
   }); 
+
+
+function subSetStates() {
+    var x = document.getElementById("mySelect").value;
+    console.log("You selected: " + x);
+}
+
 </script>
 
 </html>
