@@ -113,8 +113,8 @@ circle {
 
 <script> 
  drawScatter = function(id, data, dataPopUnemp) {  
-  	
-   
+  	//console.log("yo");
+
     var margin = {top: 20, right: 15, bottom: 60, left: 60}
       , width = 960 - margin.left - margin.right
       , height = 500 - margin.top - margin.bottom;
@@ -180,8 +180,6 @@ circle {
   // tooltip mouseover event handler
   var tipMouseover = function(d) {
       //var color = colorScale(d.manufacturer);
-      console.log(d);
-      console.log(d3);
       //var html  = "<p>" + d[2] + "<br>Population: " + parseInt(d[0]) +  " Uneployment Rate: </br>" + d[1] +"%</p>";
       var html = "<h4>"+d[2]+"</h4><table>"+
       "<tr><td>Population:</td><td>"+(parseInt(d[0]))+"k</td></tr>"+
@@ -202,7 +200,8 @@ circle {
           .duration(300) // ms
           .style("opacity", 0); // don't care about position!
   };
-    console.log(dataPopUnemp);
+
+
     g.selectAll("scatter-dots")
       .data(data)
       .enter().append("svg:circle")
@@ -210,6 +209,8 @@ circle {
           .attr("cx", function (d,i) { return x(d[0]); } )
           .attr("cy", function (d) { return y(d[1]); } )
           .attr("r", 8)
+          .attr("id", function (d) { return d[2];})
+          .attr('visibility', 'hidden')
           .on("mouseover", tipMouseover)
           .on("mouseout", tipMouseout);
 
@@ -237,9 +238,40 @@ circle {
   }); 
 
 
+function drawSubset(region) { 
+	d3.csv("data/StatesRegion.csv", function(data) { 
+		statesWant = []; 
+		statesToHide = []; 
+		for (var i = 0; i < data.length; i++) {
+			if (region == "AllStates") {
+				statesWant.push(data[i].State);
+			}
+			else {
+				if (data[i].Region == region) {
+					statesWant.push(data[i].State);
+				}
+				else {
+					statesToHide.push(data[i].State); 
+				}
+			}			
+		}
+		for (var i = 0; i < statesWant.length; i++) {
+			document.getElementById(statesWant[i]).setAttribute("visibility", "visible");
+		}
+		for (var i = 0; i < statesToHide.length; i++) { 
+			document.getElementById(statesToHide[i]).setAttribute("visibility", "hidden");
+		}
+	}); 
+}
+
 function subSetStates() {
     var x = document.getElementById("mySelect").value;
-    console.log("You selected: " + x);
+    if (x=="AllStates") {
+    	drawSubset("AllStates");
+    }
+    else { 
+    	drawSubset(x); 
+    }
 }
 
 </script>
