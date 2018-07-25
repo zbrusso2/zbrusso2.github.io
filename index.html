@@ -110,9 +110,36 @@ circle {
 	<script type="text/javascript" src="libs/fullpage.js/vendors/scrolloverflow.min.js"></script>
 	<script type="text/javascript" src="libs/fullpage.js/dist/fullpage.extensions.min.js"></script>
 	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div id="wrapper">
+
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">CS498 Final</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="/">Home</a></li>
+	      <li><a href="/index2.html">Slide 2</a></li>
+	      <li><a href="/index3.html">Slide 3</a></li>
+	    </ul>
+	  </div>
+	</nav>
+
+
+<div class="container"> 
+	<h3>State Economy Exploration</h3>
+	<p>
+		Ever wonder which states economy is currently doing the best in the United States? You may be wondering this for a variety of reasons. Maybe you want to move to a new state. Maybe you are trying to find out which state has the best opportunity to open a new business in. This interactive slide show serves to help you answer this question. Using data from the entire year of 2017, we take into account various factors to help explore which state serves your purpose the best.
+	</p>
+	<p>
+		In the map below you can see an overall view of percent change in yearly GDP for 2017. The darkness of the state indicates how positive the state did in the year. Hover over a state to see its percent change. 
+	</p>
+	<br></br>
+</div>
+<div id="wrapper" class="container">
 	<div class="section">
 		<title>Percent Change in Yearly GDP 2017</title>
 		<div id="myTitle">Percent Change in Yearly GDP 2017 </div>
@@ -201,14 +228,6 @@ circle {
   }
   this.uStates=uStates;
 })();
-
-$(document).ready(function(){
-	$('#wrapper').fullpage({
-		licenseKey:"OPEN-SOURCE-GPLV3-LICENSE",
-		scrollHorizontally: true, 
-		loopHorizontal: false
-	});
-});
 
 
 

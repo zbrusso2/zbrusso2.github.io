@@ -95,20 +95,49 @@
   <script type="text/javascript" src="libs/fullpage.js/vendors/scrolloverflow.min.js"></script>
   <script type="text/javascript" src="libs/fullpage.js/dist/fullpage.extensions.min.js"></script>
   <script src="https://d3js.org/d3.v3.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">CS498 Final</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/index2.html">Slide 2</a></li>
+        <li><a href="/index3.html">Slide 3</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container"> 
+    <h3>State Economy Exploration</h3>
+  <p>
+    Ever wonder which states economy is currently doing the best in the United States? You may be wondering this for a variety of reasons. Maybe you want to move to a new state. Maybe you are trying to find out which state has the best opportunity to open a new business in. This interactive slide show serves to help you answer this question. Using data from the entire year of 2017, we take into account various factors to help explore which state serves your purpose the best.
+  </p>
+  <p>
+    In this scatter plot below we compare GDP percent change to the unemployment rate. We also take into effect the population size and make the size of the data point reflective of a states population size. If you are interested in bucketing states with equivalent population sizes use the selector below to do that. Also again, hover over a data point to see details. 
+  </p>
+  <br></br>
+
+
+    <select id="mySelect" onchange="subSetStates()">
+      <option id= "All Populations" value="AllPops" onclick="subSetStates()">All Populations</option>
+      <option value="<5mil" onclick="subSetStates()">Less than 5 million</option>
+      <option value="<10mil" onclick="subSetStates()">Less than 10 million</option>
+      <option value=">10mil" onclick="subSetStates()">Greater than 10 million</option>
+    </select>
+  </div>
+  <a class="prev" href="/index2.html">&#10094;</a>
+  <div class="container">
   <title>GDP vs Unemployment Rate</title>
   <div id="myTitle">GDP vs Unemployment Rate</div>
-  <a class="prev" href="/index2.html">&#10094;</a>
   <div id="vis-container"> 
     <svg width="960" height="600" id="scatter1"></svg> 
   </div>
-  <select id="mySelect" onchange="subSetStates()">
-    <option id= "All Populations" value="AllPops" onclick="subSetStates()">All Populations</option>
-    <option value="<5mil" onclick="subSetStates()">Less than 5 million</option>
-    <option value="<10mil" onclick="subSetStates()">Less than 10 million</option>
-    <option value=">10mil" onclick="subSetStates()">Greater than 10 million</option>
-  </select>
+</div>
 </body>
 
 <script> 

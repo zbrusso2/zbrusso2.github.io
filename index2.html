@@ -95,22 +95,51 @@
 	<script type="text/javascript" src="libs/fullpage.js/vendors/scrolloverflow.min.js"></script>
 	<script type="text/javascript" src="libs/fullpage.js/dist/fullpage.extensions.min.js"></script>
 	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">CS498 Final</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/index2.html">Slide 2</a></li>
+        <li><a href="/index3.html">Slide 3</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+	<div class="container">
+		<h3>State Economy Exploration</h3>
+	<p>
+		Ever wonder which states economy is currently doing the best in the United States? You may be wondering this for a variety of reasons. Maybe you want to move to a new state. Maybe you are trying to find out which state has the best opportunity to open a new business in. This interactive slide show serves to help you answer this question. Using data from the entire year of 2017, we take into account various factors to help explore which state serves your purpose the best.
+	</p>
+	<p>
+		In the scatter plot below you can see that most states sit between 2% and 5% unemployment rate regardless of population. If you are interested in a specific region, for example the midwest, you can use the selector below to only see states from that specific region. Hover over a data point to see details. 
+	</p>
+	<br></br>
+
+
+		<select id="mySelect" onchange="subSetStates()">
+		  <option id= "AllStates" value="AllStates" onclick="subSetStates()">All States</option>
+		  <option value="Midwest" onclick="subSetStates()">Midwest</option>
+		  <option value="Northeast" onclick="subSetStates()">Northeast</option>
+		  <option value="South" onclick="subSetStates()">South</option>
+		  <option value="West" onclick="subSetStates()">West</option>
+		</select>
+	</div>
+	<a class="prev" href="/">&#10094;</a>
+	<div class="container">
 	<title>Population vs Unemployment Rate</title>
 	<div id="myTitle">Population vs Unemployment Rate</div>
-	<a class="prev" href="/">&#10094;</a>
 	<div id="vis-container"> 
 		<svg width="960" height="600" id="scatter1"></svg> 
 	</div>
 	<a class="next" href="/index3.html">&#10095;</a>
-	<select id="mySelect" onchange="subSetStates()">
-	  <option id= "AllStates" value="AllStates" onclick="subSetStates()">All States</option>
-	  <option value="Midwest" onclick="subSetStates()">Midwest</option>
-	  <option value="Northeast" onclick="subSetStates()">Northeast</option>
-	  <option value="South" onclick="subSetStates()">South</option>
-	  <option value="West" onclick="subSetStates()">West</option>
-	</select>
 </body>
 
 <script> 
