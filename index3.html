@@ -81,8 +81,9 @@
   border-radius: 3px 0 0 3px;
 }
 
-circle {
+.circle {
     fill: steelblue;
+    stroke:steelblue;
 }
 
 </style>
@@ -102,7 +103,12 @@ circle {
   <div id="vis-container"> 
     <svg width="960" height="600" id="scatter1"></svg> 
   </div>
-
+  <select id="mySelect" onchange="subSetStates()">
+    <option id= "All Populations" value="AllPops" onclick="subSetStates()">All Populations</option>
+    <option value="<5mil" onclick="subSetStates()">Less than 5 million</option>
+    <option value="<10mil" onclick="subSetStates()">Less than 10 million</option>
+    <option value=">10mil" onclick="subSetStates()">Greater than 10 million</option>
+  </select>
 </body>
 
 <script> 
@@ -178,7 +184,7 @@ circle {
       var html = "<h4>"+d[2]+"</h4><table>"+
       "<tr><td>GDP Change:</td><td>"+((d[0]))+"%</td></tr>"+
       "<tr><td>Unemployment Rate:</td><td>"+((d[1]))+"%</td></tr>"+
-      "<tr><td>Population:</td><td>"+(parseInt(d[3]))+"k</td></tr>"+
+      "<tr><td>Population:</td><td>"+(parseInt(d[3]))+" million</td></tr>"+
       "</table>";
 
       tooltip.html(html)
@@ -201,6 +207,19 @@ circle {
     var newScale = d3.scale.linear().domain([0, popMax]).range([0, 15]);
     //console.log(newScale(allPops[0]));
 
+    var popClass = function(d) {
+      if (d[3] < 5000) {
+        return "5000";
+      } 
+      else if (d[3] < 10000) {
+        return "10000";
+      }
+      else {
+        return "11000";
+      }
+      
+    }
+
     g.selectAll("scatter-dots")
       .data(data)
       .enter().append("svg:circle")
@@ -208,6 +227,11 @@ circle {
           .attr("cx", function (d,i) { return x(d[0]); } )
           .attr("cy", function (d) { return y(d[1]); } )
           .attr("r", function (d) { return newScale(d[3])+5;})
+          .attr("id", function (d) { return d[2];})
+          .style("fill-opacity", .4)
+          .style("stroke-opacity", 1)
+          .attr("popClass", function (d) { return popClass(d);})
+          .attr('visibility', 'visible')
           .on("mouseover", tipMouseover)
           .on("mouseout", tipMouseout);
 
@@ -236,6 +260,65 @@ circle {
     drawScatter("#scatter1", dataTuple2, dataGdpUnemp,allPops); 
 
   }); 
+
+  function drawSubset(pops) { 
+  d3.csv("data/GdpPopUnemp.csv", function(data) { 
+    statesWant = []; 
+    statesToHide = []; 
+    for (var i = 0; i < data.length; i++) {
+      var pop = parseFloat(data[i].Population);
+      if (pops == "AllPops") {
+        statesWant.push(data[i].States);
+      }
+      else {
+        console.log(pops);
+        console.log(parseFloat(pops));
+        if ((pops) == ">10mil") {
+          if (pop >= 11000) {
+            statesWant.push(data[i].States);
+          }
+          else {
+            statesToHide.push(data[i].States); 
+          }
+        }
+        else if (pops == "<5mil") {
+          if (pop <= parseFloat(5000)) {
+            statesWant.push(data[i].States);
+          }
+          else {
+            statesToHide.push(data[i].States); 
+          }
+        }
+        else {
+          if (pop <= parseFloat(10000)) {
+            statesWant.push(data[i].States);
+          }
+          else {
+            statesToHide.push(data[i].States); 
+          }
+        }
+      }     
+    }
+    for (var i = 0; i < statesWant.length; i++) {
+      document.getElementById(statesWant[i]).setAttribute("visibility", "visible");
+    }
+    for (var i = 0; i < statesToHide.length; i++) { 
+      console.log(statesToHide[i]);
+      document.getElementById(statesToHide[i]).setAttribute("visibility", "hidden");
+    }
+  }); 
+}
+
+
+  function subSetStates() {
+    var x = document.getElementById("mySelect").value;
+    if (x=="AllPops") {
+      drawSubset("AllPops");
+    }
+    else { 
+      drawSubset(x); 
+    }
+}
 </script>
 
 </html>

@@ -53,6 +53,7 @@
   position: absolute;
   z-index: 9999;
   color: #fff;
+
 }
 
 #myTitle {
@@ -80,8 +81,9 @@
   border-radius: 3px 0 0 3px;
 }
 
-circle {
+.circle {
     fill: steelblue;
+    stroke:steelblue;
 }
 
 </style>
@@ -152,7 +154,7 @@ circle {
                   .attr("x", width) // x-offset from the xAxis, move label all the way to the right
                   .attr("y", -6)    // y-offset from the xAxis, moves text UPWARD!
                   .style("text-anchor", "end") // right-justify text
-                  .text("Population");
+                  .text("Population Millions");
 
     // draw the y axis
     var yAxis = d3.svg.axis()
@@ -182,7 +184,7 @@ circle {
       //var color = colorScale(d.manufacturer);
       //var html  = "<p>" + d[2] + "<br>Population: " + parseInt(d[0]) +  " Uneployment Rate: </br>" + d[1] +"%</p>";
       var html = "<h4>"+d[2]+"</h4><table>"+
-      "<tr><td>Population:</td><td>"+(parseInt(d[0]))+"k</td></tr>"+
+      "<tr><td>Population:</td><td>"+(parseInt(d[0]))+" million</td></tr>"+
       "<tr><td>Unemployment Rate:</td><td>"+((d[1]))+"%</td></tr>"+
       "</table>";
 
@@ -210,6 +212,8 @@ circle {
           .attr("cy", function (d) { return y(d[1]); } )
           .attr("r", 8)
           .attr("id", function (d) { return d[2];})
+          .style("fill-opacity", .4)
+          .style("stroke-opacity", 1)
           .attr('visibility', 'visible')
           .on("mouseover", tipMouseover)
           .on("mouseout", tipMouseout);
